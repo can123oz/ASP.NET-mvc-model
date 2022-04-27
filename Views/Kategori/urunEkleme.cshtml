@@ -1,0 +1,41 @@
+﻿@model MvsStok.Models.Entity.TBLURUNLER
+@{
+    ViewBag.Title = "urunEkleme";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-lg-5">
+
+        <form class="form-group" method="post">
+
+            <div>
+                <label>Product Name</label>
+                <input type="text" class="form-control" name="URUNAD" value="" required/>
+            </div>
+            <div>
+                <label>Brand</label>
+                <input type="text" class="form-control" name="MARKA" value="" required/>
+            </div>
+            <div>
+                <label>Category Select</label>
+                @Html.DropDownListFor(m => m.TBLKATEGORILERs.KATEGORIID, (List<SelectListItem>)ViewBag.dgr, new { @class = "form-control" })
+            </div>
+
+            <div>
+                <label>Price</label>
+                <input type="text" class="form-control" name="FIYAT" value="" required/>
+            </div>
+            <div>
+                <label>Stock</label>
+                <input type="text" class="form-control" name="STOK" value="" required/>
+            </div>
+            <div style="margin-top:15px">
+                <button class="btn btn-info">Add Product</button>
+            </div>
+
+        </form>
+
+    </div>
+</div>

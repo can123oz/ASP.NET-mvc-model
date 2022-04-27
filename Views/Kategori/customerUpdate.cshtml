@@ -1,0 +1,30 @@
+﻿@model MvsStok.Models.Entity.TBLMUSTERILER
+@{
+    ViewBag.Title = "customerUpdate";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+
+
+<div class="row">
+    <div  class="col-lg-6">
+        @using (Html.BeginForm("UpdateCustomer","Kategori",FormMethod.Post))
+            {
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MUSTERIID)
+                    @Html.TextBoxFor(m => m.MUSTERIID, new { @class="form-control"})
+                </div>
+                <div style="margin-top:15px" >
+                    @Html.LabelFor(m => m.MUSTERIAD)
+                    @Html.TextBoxFor(m => m.MUSTERIAD, new { @class = "form-control" })
+                </div>
+                <div style="margin-top:15px" >
+                    @Html.LabelFor(m => m.MUSTERISOYAD)
+                    @Html.TextBoxFor(m => m.MUSTERISOYAD, new { @class = "form-control" })
+                </div>
+                <div>
+                    <button style="margin-top:15px" class="btn btn-primary">Update Customer</button>
+                </div>
+            }
+    </div>
+</div>

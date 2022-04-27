@@ -1,0 +1,41 @@
+﻿@model MvsStok.Models.Entity.TBLURUNLER
+
+@{
+    ViewBag.Title = "productUpdate";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-4">
+       @using (Html.BeginForm("UpdateProduct","Kategori",FormMethod.Post))
+            {
+                <div class="form-group">
+                    @Html.LabelFor(m => m.URUNID)
+                    @Html.TextBoxFor(m => m.URUNID, new { @class="form-control" })
+                </div>
+                <div>
+                    @Html.LabelFor(m => m.URUNAD)
+                    @Html.TextBoxFor(m => m.URUNAD, new { @class="form-control"}) 
+                </div>
+                <div style="margin-top:15px">
+                    @Html.LabelFor(m => m.MARKA)
+                    @Html.TextBoxFor(m => m.MARKA, new { @class = "form-control" })
+                </div>
+                <div style="margin-top:15px">
+                    @Html.LabelFor(m => m.URUNKATEGORI)
+                    @Html.TextBoxFor(m => m.URUNKATEGORI, new { @class = "form-control" })
+                </div>
+                <div style="margin-top:15px">
+                    @Html.LabelFor(m => m.FIYAT)
+                    @Html.TextBoxFor(m => m.FIYAT, new { @class = "form-control" })
+                </div>
+                <div style="margin-top:15px">
+                    @Html.LabelFor(m => m.STOK)
+                    @Html.TextBoxFor(m => m.STOK, new { @class = "form-control" })
+                </div style="margin-top:15px">
+                <div>
+                    <button style="margin-top:15px" class="btn btn-primary">Update Product</button>
+                </div>
+            }
+    </div>
+</div>
