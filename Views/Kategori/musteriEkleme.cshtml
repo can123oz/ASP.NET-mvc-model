@@ -1,4 +1,4 @@
-﻿
+﻿@model MvsStok.Models.Entity.TBLMUSTERILER  
 @{
     ViewBag.Title = "musteriEkleme";
     Layout = "~/Views/Shared/_MainLayout.cshtml";
@@ -8,15 +8,29 @@
     <div class="col-lg-4">
         <form class="form-group" method="post">
 
+            @*<div>
+            Customer Name <input type="text" class="form-control" name="MUSTERIAD" value="" />
+        </div><br /><br />
+        <div>Last Name <input type="text" class="form-control" name="MUSTERISOYAD" value="" /></div>
+
+        <button type="submit" class="btn btn-info" style="margin-top:15px">Add Customer</button>*@
             <div>
-                Customer Name <input type="text" class="form-control" name="MUSTERIAD" value="" />
-            </div><br /><br />
-            <div>Last Name <input type="text" class="form-control" name="MUSTERISOYAD" value="" /></div>
+                @Html.LabelFor(m => m.MUSTERIAD)
+                @Html.TextBoxFor(m => m.MUSTERIAD, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.MUSTERIAD, "", new { @style = "color:green" })
+            </div>
+            <div style="margin-top:15px">
+                @Html.LabelFor(m => m.MUSTERISOYAD)
+                @Html.TextBoxFor(m => m.MUSTERISOYAD, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.MUSTERISOYAD, "", new { @style = "color:blue" })
+            </div>
 
-            <button type="submit" class="btn btn-info" style="margin-top:15px">Add Customer</button>
-
-
-
+            <button type="submit" class="btn btn-info" id="btn1" style="margin-top:15px">Add Customer</button>
+            <script>
+                document.getElementById("btn1").addEventListener("click", () => {
+                    alert("New customer has been added");
+                });
+            </script>
         </form>
     </div>
 </div>

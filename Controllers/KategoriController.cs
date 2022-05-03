@@ -4,7 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MvsStok.Models.Entity;
-
+using PagedList;
+using PagedList.Mvc;
 
 namespace MvsStok.Controllers
 {
@@ -12,15 +13,16 @@ namespace MvsStok.Controllers
     {
         // GET: Kategori
         MvcDbStokEntities db = new MvcDbStokEntities();
-        public ActionResult Category()
+        public ActionResult Category(int page=1)
         {
-            var ctgry = db.TBLKATEGORILERs.ToList();
-            
+            //var ctgry = db.TBLKATEGORILERs.ToList();
+            var ctgry = db.TBLKATEGORILERs.ToList().ToPagedList(page, 5);
             return View(ctgry);
         }
-        public ActionResult Products()
+        public ActionResult Products(int page=1)
         {
-            var prdct = db.TBLURUNLERs.ToList();
+            //var prdct = db.TBLURUNLERs.ToList();
+            var prdct = db.TBLURUNLERs.ToList().ToPagedList(page, 5);
             return View(prdct);
         }
 
@@ -44,9 +46,13 @@ namespace MvsStok.Controllers
         [HttpPost]
         public ActionResult YeniKategori(TBLKATEGORILER p1)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
             db.TBLKATEGORILERs.Add(p1);
             db.SaveChanges();
-            return View();
+            return RedirectToAction("Category");
         }
 
         [HttpGet]
@@ -59,21 +65,25 @@ namespace MvsStok.Controllers
         [HttpPost]
         public ActionResult musteriEkleme(TBLMUSTERILER p2)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
             db.TBLMUSTERILERs.Add(p2);
             db.SaveChanges();
-            return View();
+            return RedirectToAction("Customers");
         }
 
-        [HttpGet] 
+        [HttpGet]
         public ActionResult urunEkleme()
         {
-            List<SelectListItem> degerler = (from i in db.TBLKATEGORILERs.ToList()
+            List<SelectListItem> dgerler = (from i in db.TBLKATEGORILERs.ToList()
                                             select new SelectListItem
                                             {
                                                 Text = i.KATEGORIAD,
                                                 Value = i.KATEGORIID.ToString()
                                             }).ToList();
-            ViewBag.dgr = degerler;
+            ViewBag.dgr = dgerler;
             return View();
         }
         [HttpPost]
@@ -93,7 +103,7 @@ namespace MvsStok.Controllers
             db.SaveChanges();
             return RedirectToAction("Category");
         }
-        
+
         public ActionResult productDelete(int id)
         {
             var product = db.TBLURUNLERs.Find(id);
@@ -101,7 +111,7 @@ namespace MvsStok.Controllers
             db.SaveChanges();
             return RedirectToAction("Products");
         }
-        
+
         public ActionResult customerDelete(int id)
         {
             var customer = db.TBLMUSTERILERs.Find(id);
@@ -112,9 +122,9 @@ namespace MvsStok.Controllers
         public ActionResult categoryGetter(int id)
         {
             var ctgry = db.TBLKATEGORILERs.Find(id);
-            return View("categoryGetter",ctgry);
-        } 
-        
+            return View("categoryGetter", ctgry);
+        }
+
         public ActionResult UpdateCategory(TBLKATEGORILER p1)
         {
             var ctgr = db.TBLKATEGORILERs.Find(p1.KATEGORIID);
@@ -125,7 +135,16 @@ namespace MvsStok.Controllers
         public ActionResult productUpdate(int id)
         {
             var prdct = db.TBLURUNLERs.Find(id);
-            return View("productUpdate",prdct);
+
+            List<SelectListItem> degerler = (from i in db.TBLKATEGORILERs.ToList()
+                                             select new SelectListItem
+                                             {
+                                                 Text = i.KATEGORIAD,
+                                                 Value = i.KATEGORIID.ToString()
+                                             }).ToList();
+            ViewBag.dgrr = degerler;
+
+            return View("productUpdate", prdct);
         }
 
         public ActionResult customerUpdate(int id)
@@ -147,12 +166,12 @@ namespace MvsStok.Controllers
             var prdct = db.TBLURUNLERs.Find(p3.URUNID);
             prdct.URUNAD = p3.URUNAD;
             prdct.MARKA = p3.MARKA;
-            prdct.URUNKATEGORI = p3.URUNKATEGORI;
+            var ktg = db.TBLKATEGORILERs.Where(m => m.KATEGORIID == p3.TBLKATEGORILERs.KATEGORIID).FirstOrDefault();
+            prdct.URUNKATEGORI = ktg.KATEGORIID;
             prdct.FIYAT = p3.FIYAT;
             prdct.STOK = p3.STOK;
             db.SaveChanges();
             return RedirectToAction("Products");
         }
-    }   
-        
+    }
 }

@@ -11,7 +11,8 @@ namespace MvsStok.Models.Entity
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class TBLMUSTERILER
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,7 +22,13 @@ namespace MvsStok.Models.Entity
         }
     
         public int MUSTERIID { get; set; }
+
+        [Required(ErrorMessage = "Please enter a valid name..")]
+        [StringLength(50, ErrorMessage ="Please enter a shorter name.")]
         public string MUSTERIAD { get; set; }
+
+        [Required(ErrorMessage = "Please enter a valid lastname..")]
+        [StringLength(50, ErrorMessage = "Please enter a shorter lastname.")]
         public string MUSTERISOYAD { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
